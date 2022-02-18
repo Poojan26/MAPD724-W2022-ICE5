@@ -6,6 +6,7 @@ public class OceanBehaviour : MonoBehaviour
 {
     // Start is called before the first frame update
     public float verticalSpeed;
+    public Boundary boundary; 
     void Start()
     {
         
@@ -15,10 +16,26 @@ public class OceanBehaviour : MonoBehaviour
     void Update()
     {
         Move(); 
+        CheckBounds();
     }
 
     public void Move()
     {
-        transform.position = transform.position + new Vector2(0.0f,verticalSpeed);
+        Vector2 currentPosition = transform.position;
+        currentPosition += new Vector2(0.0f,verticalSpeed);
+        transform.position = currentPosition;
+    }
+
+    public void CheckBounds()
+    {
+        if(transform.position.y < boundary.bottom)
+        {
+            ResetObject();
+        }
+    }
+
+    public void ResetObject()
+    {
+        transform.position = new Vector2(0.0f,boundary.top); 
     }
 }
